@@ -1,6 +1,6 @@
 services:
   api:
-    image: ghcr.io/coollabsio/next-image-transformation
+    image: xurminskyd/next-image-transformation:latest
     ports:
       - "3000"
     environment:
