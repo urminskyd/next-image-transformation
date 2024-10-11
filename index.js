@@ -29,14 +29,15 @@ Bun.serve({
 
 async function resize(url) {
     const preset = "pr:sharp"
+
     let src = url.pathname.split("/").slice(2).join("/");
+    const origin = new URL(src).hostname;
 
     try {
-        src = decodeURIComponent(src);
+        src = encodeURIComponent(src);
     } catch (e) {
     }
-    
-    const origin = new URL(src).hostname;
+
     const allowed = allowedDomains.filter(domain => {
         if (domain === "*") return true;
         if (domain === origin) return true;
