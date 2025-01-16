@@ -27,6 +27,18 @@ Bun.serve({
     }
 });
 
+function buildUrl({ imgproxyUrl, preset, width, height, quality, ext, src }) {
+    const parts = [
+        imgproxyUrl,
+        preset,
+        `resize:fill:${width}:${height}`,
+        `q:${quality}`,
+        ext ? `ext:${ext}` : null,
+        `plain/${src}`
+    ];
+    return parts.filter(Boolean).join('/');
+}
+
 async function resize(url) {
     const preset = "pr:sharp"
 
@@ -50,8 +62,9 @@ async function resize(url) {
     const width = url.searchParams.get("width") || 0;
     const height = url.searchParams.get("height") || 0;
     const quality = url.searchParams.get("quality") || 75;
+    const ext = url.searchParams.get("ext") || null;
     try {
-        const url = `${imgproxyUrl}/${preset}/resize:fill:${width}:${height}/q:${quality}/plain/${src}`
+        const url = buildUrl({ imgproxyUrl, preset, width, height, quality, ext, src });
         const image = await fetch(url, {
             headers: {
                 "Accept": "image/avif,image/webp,image/apng,*/*",
