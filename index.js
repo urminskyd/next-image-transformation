@@ -72,6 +72,12 @@ async function resize(url) {
         })
         const headers = new Headers(image.headers);
         headers.set("Server", "NextImageTransformation");
+        
+        // CORS headers
+        headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+        headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
         return new Response(image.body, {
             headers
         })
